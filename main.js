@@ -1,56 +1,118 @@
-let productos = [
-    {id: 1, producto:"campera", precio: 0,stock:0},
-    {id:2, producto:"remera",precio:0,stock:0},
-    {id:3,producto:"pantalon",precio:0,stock:0},
-    {id:4,producto:"zapatilla",precio:0,stock:0},
-    {id:4,producto:"medias",precio:0,stock:0},
-    {id:4,producto:"guantes",precio:0,stock:0}
-]
 
-for (let i = 0; i < productos.length; i++) {
-    let entrada = parseInt(prompt("Ingresar el precio de: "+productos[i].producto))
-    productos[i].precio=entrada
+let allContainerCart = document.querySelector('.products');
+let containerBuyCart = document.querySelector('.card-items');
+let priceTotal = document.querySelector('.price-total')
+let amountProduct = document.querySelector('.count-product');
+
+let buyThings = [];
+let totalCard = 0;
+let countProduct = 0;
+
+loadEventListenrs();
+function loadEventListenrs(){
+    allContainerCart.addEventListener('click', addProduct);
+
+    containerBuyCart.addEventListener('click', deleteProduct);
 }
 
-for (let i = 0; i < productos.length; i++) {
-    let entrada = parseInt(prompt("Ingresar el stock de: "+productos[i].producto))
-    productos[i].stock=entrada
+function addProduct(e){
+    e.preventDefault();
+    if (e.target.classList.contains('btn-add-cart')) {
+        const selectProduct = e.target.parentElement; 
+        readTheContent(selectProduct);
+    }
 }
 
-let contenedorProductos = document.getElementById("productos")
-console.dir(contenedorProductos)
+function deleteProduct(e) {
+    if (e.target.classList.contains('delete-product')) {
+        const deleteId = e.target.getAttribute('data-id');
 
-
-
-for(const producto of productos){
-    let tarjetaProducto=document.createElement('div')
-    tarjetaProducto.className="producto"
-    tarjetaProducto.innerHTML = `
-    <h3>${producto.producto}</h3>
-    <h4>$${producto.precio}</h4>
-    <p>Quedan ${producto.stock} u </p>
-    <div id = "contenedor"></div>
-    <button id = "boton">agregar al carrito</button>
-    
-    `
-    
-    contenedorProductos.append(tarjetaProducto)
+        buyThings.forEach(value => {
+            if (value.id == deleteId) {
+                let priceReduce = parseFloat(value.price) * parseFloat(value.amount);
+                totalCard =  totalCard - priceReduce;
+                totalCard = totalCard.toFixed(2);
+            }
+        });
+        buyThings = buyThings.filter(product => product.id !== deleteId);
+        
+        countProduct--;
+    }
+    if (buyThings.length === 0) {
+        priceTotal.innerHTML = 0;
+        amountProduct.innerHTML = 0;
+    }
+    loadHtml();
 }
 
+function readTheContent(product){
+    const infoProduct = {
+        image: product.querySelector('div img').src,
+        title: product.querySelector('.title').textContent,
+        price: product.querySelector('div p span').textContent,
+        id: product.querySelector('a').getAttribute('data-id'),
+        amount: 1
+    }
 
-let boton = document.getElementById('boton')
-let contenedor = document.getElementById('contenedor')
-let contador = 0
-boton.addEventListener('click',reemplazarNumero)
+    totalCard = parseFloat(totalCard) + parseFloat(infoProduct.price);
+    totalCard = totalCard.toFixed(2);
 
-function reemplazarNumero(){
-    contador++
-    contenedor.innerHTML = contador
+    const exist = buyThings.some(product => product.id === infoProduct.id);
+    if (exist) {
+        const pro = buyThings.map(product => {
+            if (product.id === infoProduct.id) {
+                product.amount++;
+                return product;
+            } else {
+                return product
+            }
+        });
+        buyThings = [...pro];
+    } else {
+        buyThings = [...buyThings, infoProduct]
+        countProduct++;
+    }
+    loadHtml();
 }
-console.log(JSON.stringify(productos));
-let productosJSON = JSON.stringify(productos)
-localStorage.setItem("productos", productosJSON)
 
-// let iva = 1.21
+function loadHtml(){
+    clearHtml();
+    buyThings.forEach(product => {
+        const {image, title, price, amount, id} = product;
+        const row = document.createElement('div');
+        row.classList.add('item');
+        row.innerHTML = `
+            <img src="${image}" alt="">
+            <div class="item-content">
+                <h5>${title}</h5>
+                <h5 class="cart-price">${price}$</h5>
+                <h6>Amount: ${amount}</h6>
+            </div>
+            <span class="delete-product" data-id="${id}">X</span>
+        `;
 
-// let precioConIva = console.log(parseInt(prompt("Ingresar el precio del producto para sumarle el iva: "))*iva);
+        containerBuyCart.appendChild(row);
+
+        priceTotal.innerHTML = totalCard;
+
+        amountProduct.innerHTML = countProduct;
+    });
+}
+function clearHtml(){
+    containerBuyCart.innerHTML = '';
+}
+// Desafio clase 13 Incorporando librerias
+Swal.fire(
+    'Aviso de cookies',
+    'Utilizamos cookies porpias y de terceros para mejorar nuestros servicios. si continúa con la navegación, consideramos que acepta este uso.',
+    'info'
+)
+
+let boton = document.querySelector(".no-stock")
+boton.addEventListener('click', () => {
+    Swal.fire(
+        'Lo sentimos',
+        'No hay stock de este producto',
+        'error'
+    )
+})
