@@ -116,3 +116,7 @@ boton.addEventListener('click', () => {
         'error'
     )
 })
+// Desafio clase 15 fetch 
+fetch('./data.json')
+.then((respuesta) => respuesta.json())
+.then((data)=> {console.log(data);})

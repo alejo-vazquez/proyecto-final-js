@@ -1,0 +1,12 @@
+{
+        "productos": [
+        {"id":1, "nombre":"Buzo de Friza Invisible Negro Talla S","precio":3000, "stock":65},
+        {"id":2, "nombre":"Buzo de Friza Invisible Negro Talla M","precio":3000, "stock":57},
+        {"id":3, "nombre":"Buzo de Friza Invisible Negro Talla L","precio":3000, "stock":34},
+        {"id":4, "nombre":"Buzo de Friza Invisible Negro Talla XL","precio":3000, "stock":63},
+        {"id":5, "nombre":"Campera Inflable Talle S","precio":5000, "stock":32},
+        {"id":6, "nombre":"Campera Inflable Talle M","precio":5000, "stock":0},
+        {"id":7, "nombre":"Campera Inflable Talle L","precio":5000, "stock":54},
+        {"id":8, "nombre":"Campera Inflable Talle XL","precio":5000, "stock":32}
+    ]
+}
