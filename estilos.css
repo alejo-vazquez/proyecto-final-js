@@ -149,3 +149,7 @@ header{
 .cart-products .item .item-content h5.cart-price{
     font-weight: 700;
 }
+.botonparacomprar{
+    width: 90px;
+    height: 30px;
+}

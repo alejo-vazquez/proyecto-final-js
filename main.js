@@ -73,6 +73,7 @@ function readTheContent(product){
         countProduct++;
     }
     loadHtml();
+    
 }
 
 function loadHtml(){
@@ -101,12 +102,6 @@ function loadHtml(){
 function clearHtml(){
     containerBuyCart.innerHTML = '';
 }
-// Desafio clase 13 Incorporando librerias
-Swal.fire(
-    'Aviso de cookies',
-    'Utilizamos cookies porpias y de terceros para mejorar nuestros servicios. si continúa con la navegación, consideramos que acepta este uso.',
-    'info'
-)
 
 let boton = document.querySelector(".no-stock")
 boton.addEventListener('click', () => {
@@ -116,7 +111,18 @@ boton.addEventListener('click', () => {
         'error'
     )
 })
-// Desafio clase 15 fetch 
-fetch('./data.json')
-.then((respuesta) => respuesta.json())
-.then((data)=> {console.log(data);})
+
+Swal.fire(
+    'Aviso de cookies',
+    'Utilizamos cookies porpias y de terceros para mejorar nuestros servicios. si continúa con la navegación, consideramos que acepta este uso.',
+    'info'
+)
+
+let btComprar = document.querySelector(".botonparacomprar")
+btComprar.addEventListener('click', () => {
+    Swal.fire(
+        'Compra realizada',
+        '',
+        'success'
+    )
+})
