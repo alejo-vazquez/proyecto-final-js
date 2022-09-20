@@ -76,6 +76,10 @@ function readTheContent(product){
     
 }
 
+fetch('./data.json')
+.then((respuesta) => respuesta.json())
+.then((data)=> {console.log(data);})
+
 function loadHtml(){
     clearHtml();
     buyThings.forEach(product => {

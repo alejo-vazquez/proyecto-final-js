@@ -7,6 +7,6 @@
         {"id":5, "nombre":"Campera Inflable Talle S","precio":5000, "stock":32},
         {"id":6, "nombre":"Campera Inflable Talle M","precio":5000, "stock":0},
         {"id":7, "nombre":"Campera Inflable Talle L","precio":5000, "stock":54},
-        {"id":8, "nombre":"Campera Inflable Talle XL","precio":5000, "stock":32}
+        {"id":8, "nombre":"Campera Inflable Talle XL","precio":5000, "stock":32} 
     ]
 }
